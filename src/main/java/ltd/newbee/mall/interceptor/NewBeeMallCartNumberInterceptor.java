@@ -8,16 +8,17 @@
  */
 package ltd.newbee.mall.interceptor;
 
-import ltd.newbee.mall.common.Constants;
-import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
-import ltd.newbee.mall.dao.NewBeeMallShoppingCartItemMapper;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import ltd.newbee.mall.common.Constants;
+import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
+import ltd.newbee.mall.dao.NewBeeMallShoppingCartItemMapper;
 
 /**
  * newbee-mall购物车数量处理

@@ -8,14 +8,16 @@
  */
 package ltd.newbee.mall.controller.common;
 
-import com.wf.captcha.SpecCaptcha;
-import com.wf.captcha.base.Captcha;
-import ltd.newbee.mall.common.Constants;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.wf.captcha.SpecCaptcha;
+import com.wf.captcha.base.Captcha;
+
+import ltd.newbee.mall.common.Constants;
 
 /**
  * @author 13

@@ -1,8 +1,8 @@
 package ltd.newbee.mall.util;
 
-import org.springframework.util.StringUtils;
-
 import java.net.URI;
+
+import org.springframework.util.StringUtils;
 
 /**
  * @author 13

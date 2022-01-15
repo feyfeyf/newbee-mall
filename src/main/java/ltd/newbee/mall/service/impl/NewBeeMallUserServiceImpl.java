@@ -8,19 +8,25 @@
  */
 package ltd.newbee.mall.service.impl;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
+
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.dao.MallUserMapper;
 import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.service.NewBeeMallUserService;
-import ltd.newbee.mall.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.thymeleaf.util.StringUtils;
-
-import javax.servlet.http.HttpSession;
-import java.util.List;
+import ltd.newbee.mall.util.BeanUtil;
+import ltd.newbee.mall.util.MD5Util;
+import ltd.newbee.mall.util.NewBeeMallUtils;
+import ltd.newbee.mall.util.PageQueryUtil;
+import ltd.newbee.mall.util.PageResult;
 
 @Service
 public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {

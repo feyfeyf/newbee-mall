@@ -8,11 +8,12 @@
  */
 package ltd.newbee.mall.dao;
 
-import ltd.newbee.mall.entity.IndexConfig;
-import ltd.newbee.mall.util.PageQueryUtil;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import ltd.newbee.mall.entity.IndexConfig;
+import ltd.newbee.mall.util.PageQueryUtil;
 
 public interface IndexConfigMapper {
     int deleteByPrimaryKey(Long configId);

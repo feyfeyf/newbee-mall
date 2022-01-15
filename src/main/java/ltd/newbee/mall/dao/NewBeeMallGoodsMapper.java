@@ -8,12 +8,20 @@
  */
 package ltd.newbee.mall.dao;
 
-import ltd.newbee.mall.entity.NewBeeMallGoods;
-import ltd.newbee.mall.entity.StockNumDTO;
-import ltd.newbee.mall.util.PageQueryUtil;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.catalina.mapper.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.Goodsinfo;
+import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.StockNumDTO;
+
+import ltd.newbee.mall.util.PageQueryUtil;
+import ltd.newbee.mall.util.SearchPageParams;
 
 public interface NewBeeMallGoodsMapper {
     int deleteByPrimaryKey(Long goodsId);
@@ -48,4 +56,17 @@ public interface NewBeeMallGoodsMapper {
 
     int batchUpdateSellStatus(@Param("orderIds")Long[] orderIds,@Param("sellStatus") int sellStatus);
 
+    List<NewBeeMallGoods> goodsInfo(Mapper paramentMap);
+
+	Goodsinfo selectByGoodsinfoPK(Long id);
+
+	List<GoodsImage> selectByGoodsImage();
+	
+
+
+	ArrayList<NewBeeMallGoods> selectBygoodsPage(Map<String, Object> paramap1);
+    
+
+    
+    
 }

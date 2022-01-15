@@ -382,4 +382,53 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where goods_id = #{goodsId,jdbcType=BIGINT}
   </update>
+  <select id="selectByGoodsinfoPK" parameterType="long" resultType="ltd.newbee.mall.entity.Goodsinfo">
+        select id,name,size,pa,weight,housyou,time,sizeOfPackage
+        From goodsinfo where id = #{id,jdbcType = BIGINT}
+        
+    </select>
+      <select id="selectByGoodsImage" parameterType="long" resultType="ltd.newbee.mall.entity.GoodsImage">
+        select goodsId,imageUrl
+        From goodsImage 
+        
+    </select>
+    
+    <sql id = "basic_column">
+    goods_id,goods_name,goods_intro,goods_category_id,goods_cover_img,goods_carousel,goods_detail_content,original_price,
+    selling_price,stock_num,tag,goods_sell_status,create_user,create_time,update_user,update_time
+    </sql>
+      <select id="selectBygoodsPage" parameterType="Map" resultType="ltd.newbee.mall.entity.NewBeeMallGoods">
+        select 
+        <include refid = "basic_column"/>
+        From tb_newbee_mall_goods_info
+        <where>
+        <if test="keyword!=null and keyword!=''">
+        and goods_name like CONCAT('%',#{keyword},'%')
+        </if>       
+        <if test="goodsCategoryId!=null and goodsCategoryId!=''">
+        and goods_category_id = #{goodsCategoryId,jdbcType = INTEGER}
+        </if> 
+        </where>
+         <if test="limit!=null and limit!=''">
+	     limit #{start},3
+        </if> 
+         <if test="orderBy!=null and orderBy!=''">
+            <choose>
+                <when test="orderBy == 'new'">
+                    <!-- 按照发布时间倒序排列 -->
+                    order by goods_id desc
+                </when>
+                <when test="orderBy == 'price'">
+                    <!-- 按照售价从小到大排列 -->
+                    order by selling_price asc
+                </when>
+                <otherwise>
+                    <!-- 默认按照库存数量从大到小排列 -->
+                    order by stock_num desc
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+
+    
 </mapper>

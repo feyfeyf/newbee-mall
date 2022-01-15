@@ -8,13 +8,13 @@
  */
 package ltd.newbee.mall.service;
 
+import java.util.List;
+
 import ltd.newbee.mall.controller.vo.NewBeeMallIndexCategoryVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
 import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
-
-import java.util.List;
 
 public interface NewBeeMallCategoryService {
     /**

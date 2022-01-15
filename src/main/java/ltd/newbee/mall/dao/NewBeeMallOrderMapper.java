@@ -8,11 +8,14 @@
  */
 package ltd.newbee.mall.dao;
 
-import ltd.newbee.mall.entity.NewBeeMallOrder;
-import ltd.newbee.mall.util.PageQueryUtil;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.Goodsinfo;
+import ltd.newbee.mall.entity.NewBeeMallOrder;
+import ltd.newbee.mall.util.PageQueryUtil;
 
 public interface NewBeeMallOrderMapper {
     int deleteByPrimaryKey(Long orderId);
@@ -40,4 +43,8 @@ public interface NewBeeMallOrderMapper {
     int closeOrder(@Param("orderIds") List<Long> orderIds, @Param("orderStatus") int orderStatus);
 
     int checkDone(@Param("orderIds") List<Long> asList);
+    
+    Goodsinfo selectByGoodsinfoPK(long goodsInfo);
+    
+    GoodsImage getgoodsImage();
 }

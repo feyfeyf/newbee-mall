@@ -8,10 +8,10 @@
  */
 package ltd.newbee.mall.controller.vo;
 
-import ltd.newbee.mall.entity.GoodsCategory;
-
 import java.io.Serializable;
 import java.util.List;
+
+import ltd.newbee.mall.entity.GoodsCategory;
 
 /**
  * 搜索页面分类数据VO

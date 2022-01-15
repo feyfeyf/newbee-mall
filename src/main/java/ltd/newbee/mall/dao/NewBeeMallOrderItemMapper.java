@@ -8,10 +8,11 @@
  */
 package ltd.newbee.mall.dao;
 
-import ltd.newbee.mall.entity.NewBeeMallOrderItem;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import ltd.newbee.mall.entity.NewBeeMallOrderItem;
 
 public interface NewBeeMallOrderItemMapper {
     int deleteByPrimaryKey(Long orderItemId);
