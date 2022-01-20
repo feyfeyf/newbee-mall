@@ -16,6 +16,10 @@ import org.apache.catalina.mapper.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.GoodsQA;
+import ltd.newbee.mall.entity.GoodsQAins;
+import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.GoodsReviewIns;
 import ltd.newbee.mall.entity.Goodsinfo;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.StockNumDTO;
@@ -66,7 +70,23 @@ public interface NewBeeMallGoodsMapper {
 
 	ArrayList<NewBeeMallGoods> selectBygoodsPage(Map<String, Object> paramap1);
     
+	ArrayList<GoodsQA> selectByGoodsqa(String orderBy,int pageNo);
 
+	ArrayList<GoodsQA> selectByGoodsqa(String orderBy, List<GoodsQA> subList);
+	
+	ArrayList<GoodsQA> countComment(String start,String pageSize);
+
+	int QAinsert(GoodsQAins question);
+	
+	ArrayList<GoodsReview> selectByGoodsreview(Map<String, Object> params);
+	
+	double selectByGoodsRateAvg(long goodsId);
+	
+	long[] selectByGoodsRateCount(long goodsId);
+	
+	long selectByGoodsGreatRateCount(long goodsId);
+	
+	int reviewinsert(GoodsReviewIns Review);
     
     
 }

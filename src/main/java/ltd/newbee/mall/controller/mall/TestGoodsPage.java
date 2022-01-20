@@ -36,7 +36,7 @@ public class TestGoodsPage {
 		
 		ArrayList<NewBeeMallGoods>list = newBeeMallGoodsService.selectBygoodsPage(paramap1);
 		if(!CollectionUtils.isEmpty(list)) {
-			assertEquals(23,list.size());
+			assertEquals(3,list.size());
 			assertTrue(checkgoodsIdInlist(list,102781));
 			assertTrue(checkGoodsCategoryIdInlist(list,46));
 		}

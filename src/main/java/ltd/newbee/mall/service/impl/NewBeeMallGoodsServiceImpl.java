@@ -25,6 +25,10 @@ import ltd.newbee.mall.dao.GoodsCategoryMapper;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
 import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.GoodsQA;
+import ltd.newbee.mall.entity.GoodsQAins;
+import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.GoodsReviewIns;
 import ltd.newbee.mall.entity.Goodsinfo;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
@@ -36,103 +40,102 @@ import ltd.newbee.mall.util.SearchPageParams;
 @Service
 public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 
-    @Autowired
-    private NewBeeMallGoodsMapper goodsMapper;
-    @Autowired
-    private GoodsCategoryMapper goodsCategoryMapper;
+	@Autowired
+	private NewBeeMallGoodsMapper goodsMapper;
+	@Autowired
+	private GoodsCategoryMapper goodsCategoryMapper;
 
-    @Override
-    public PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil) {
-        List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsList(pageUtil);
-        int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
-        PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
-    }
+	@Override
+	public PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil) {
+		List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsList(pageUtil);
+		int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
+		PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
+		return pageResult;
+	}
 
-    @Override
-    public String saveNewBeeMallGoods(NewBeeMallGoods goods) {
-        GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
-        // 分类不存在或者不是三级分类，则该参数字段异常
-        if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
-            return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
-        }
-        if (goodsMapper.selectByCategoryIdAndName(goods.getGoodsName(), goods.getGoodsCategoryId()) != null) {
-            return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
-        }
-        if (goodsMapper.insertSelective(goods) > 0) {
-            return ServiceResultEnum.SUCCESS.getResult();
-        }
-        return ServiceResultEnum.DB_ERROR.getResult();
-    }
+	@Override
+	public String saveNewBeeMallGoods(NewBeeMallGoods goods) {
+		GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
+		// 分类不存在或者不是三级分类，则该参数字段异常
+		if (goodsCategory == null
+				|| goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
+			return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
+		}
+		if (goodsMapper.selectByCategoryIdAndName(goods.getGoodsName(), goods.getGoodsCategoryId()) != null) {
+			return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
+		}
+		if (goodsMapper.insertSelective(goods) > 0) {
+			return ServiceResultEnum.SUCCESS.getResult();
+		}
+		return ServiceResultEnum.DB_ERROR.getResult();
+	}
 
-    @Override
-    public void batchSaveNewBeeMallGoods(List<NewBeeMallGoods> newBeeMallGoodsList) {
-        if (!CollectionUtils.isEmpty(newBeeMallGoodsList)) {
-            goodsMapper.batchInsert(newBeeMallGoodsList);
-        }
-    }
+	@Override
+	public void batchSaveNewBeeMallGoods(List<NewBeeMallGoods> newBeeMallGoodsList) {
+		if (!CollectionUtils.isEmpty(newBeeMallGoodsList)) {
+			goodsMapper.batchInsert(newBeeMallGoodsList);
+		}
+	}
 
-    @Override
-    public String updateNewBeeMallGoods(NewBeeMallGoods goods) {
-        GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
-        // 分类不存在或者不是三级分类，则该参数字段异常
-        if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
-            return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
-        }
-        NewBeeMallGoods temp = goodsMapper.selectByPrimaryKey(goods.getGoodsId());
-        if (temp == null) {
-            return ServiceResultEnum.DATA_NOT_EXIST.getResult();
-        }
-        NewBeeMallGoods temp2 = goodsMapper.selectByCategoryIdAndName(goods.getGoodsName(), goods.getGoodsCategoryId());
-        if (temp2 != null && !temp2.getGoodsId().equals(goods.getGoodsId())) {
-            //name和分类id相同且不同id 不能继续修改
-            return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
-        }
-        goods.setUpdateTime(new Date());
-        if (goodsMapper.updateByPrimaryKeySelective(goods) > 0) {
-            return ServiceResultEnum.SUCCESS.getResult();
-        }
-        return ServiceResultEnum.DB_ERROR.getResult();
-    }
+	@Override
+	public String updateNewBeeMallGoods(NewBeeMallGoods goods) {
+		GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
+		// 分类不存在或者不是三级分类，则该参数字段异常
+		if (goodsCategory == null
+				|| goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
+			return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
+		}
+		NewBeeMallGoods temp = goodsMapper.selectByPrimaryKey(goods.getGoodsId());
+		if (temp == null) {
+			return ServiceResultEnum.DATA_NOT_EXIST.getResult();
+		}
+		NewBeeMallGoods temp2 = goodsMapper.selectByCategoryIdAndName(goods.getGoodsName(), goods.getGoodsCategoryId());
+		if (temp2 != null && !temp2.getGoodsId().equals(goods.getGoodsId())) {
+			// name和分类id相同且不同id 不能继续修改
+			return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
+		}
+		goods.setUpdateTime(new Date());
+		if (goodsMapper.updateByPrimaryKeySelective(goods) > 0) {
+			return ServiceResultEnum.SUCCESS.getResult();
+		}
+		return ServiceResultEnum.DB_ERROR.getResult();
+	}
 
-    @Override
-    public NewBeeMallGoods getNewBeeMallGoodsById(Long id) {
-        return goodsMapper.selectByPrimaryKey(id);
-    }
-    
-    @Override
-    public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
-        return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
-    }
+	@Override
+	public NewBeeMallGoods getNewBeeMallGoodsById(Long id) {
+		return goodsMapper.selectByPrimaryKey(id);
+	}
 
-    @Override
-    public PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil) {
-        List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsListBySearch(pageUtil);
-        int total = goodsMapper.getTotalNewBeeMallGoodsBySearch(pageUtil);
-        List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(goodsList)) {
-            newBeeMallSearchGoodsVOS = BeanUtil.copyList(goodsList, NewBeeMallSearchGoodsVO.class);
-            for (NewBeeMallSearchGoodsVO newBeeMallSearchGoodsVO : newBeeMallSearchGoodsVOS) {
-                String goodsName = newBeeMallSearchGoodsVO.getGoodsName();
-                String goodsIntro = newBeeMallSearchGoodsVO.getGoodsIntro();
-                // 字符串过长导致文字超出的问题
-                if (goodsName.length() > 28) {
-                    goodsName = goodsName.substring(0, 28) + "...";
-                    newBeeMallSearchGoodsVO.setGoodsName(goodsName);
-                }
-                if (goodsIntro.length() > 30) {
-                    goodsIntro = goodsIntro.substring(0, 30) + "...";
-                    newBeeMallSearchGoodsVO.setGoodsIntro(goodsIntro);
-                }
-            }
-        }
-        PageResult pageResult = new PageResult(newBeeMallSearchGoodsVOS, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
-    }
+	@Override
+	public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
+		return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
+	}
 
-
-
-
+	@Override
+	public PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil) {
+		List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsListBySearch(pageUtil);
+		int total = goodsMapper.getTotalNewBeeMallGoodsBySearch(pageUtil);
+		List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
+		if (!CollectionUtils.isEmpty(goodsList)) {
+			newBeeMallSearchGoodsVOS = BeanUtil.copyList(goodsList, NewBeeMallSearchGoodsVO.class);
+			for (NewBeeMallSearchGoodsVO newBeeMallSearchGoodsVO : newBeeMallSearchGoodsVOS) {
+				String goodsName = newBeeMallSearchGoodsVO.getGoodsName();
+				String goodsIntro = newBeeMallSearchGoodsVO.getGoodsIntro();
+				// 字符串过长导致文字超出的问题
+				if (goodsName.length() > 28) {
+					goodsName = goodsName.substring(0, 28) + "...";
+					newBeeMallSearchGoodsVO.setGoodsName(goodsName);
+				}
+				if (goodsIntro.length() > 30) {
+					goodsIntro = goodsIntro.substring(0, 30) + "...";
+					newBeeMallSearchGoodsVO.setGoodsIntro(goodsIntro);
+				}
+			}
+		}
+		PageResult pageResult = new PageResult(newBeeMallSearchGoodsVOS, total, pageUtil.getLimit(),
+				pageUtil.getPage());
+		return pageResult;
+	}
 
 	@Override
 	public List<GoodsImage> selectByGoodsImage() {
@@ -140,10 +143,84 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		return goodsMapper.selectByGoodsImage();
 	}
 
-
 	@Override
 	public ArrayList<NewBeeMallGoods> selectBygoodsPage(Map<String, Object> paramap1) {
 		return goodsMapper.selectBygoodsPage(paramap1);
 	}
+
+	@Override
+	public ArrayList<GoodsQA> selectByGoodsqa(String orderBy, int pageNo) {
+		ArrayList<GoodsQA> qa = goodsMapper.selectByGoodsqa(orderBy, pageNo);
+		// 从第几条数据开始
+		int start = (pageNo - 1) * 3;
+		int end = pageNo * 3;
+		return goodsMapper.selectByGoodsqa(orderBy, qa.subList(start, end));
+	}
+
 	
+	
+	/*
+	 * @Override public ArrayList<GoodsQA> countComment(String pageNo,String
+	 * pageSize) { int i = Integer.parseInt(pageNo)-1; int j
+	 * =Integer.parseInt(pageSize); int start =i*j;
+	 * 
+	 * return goodsMapper.countComment(String.valueOf(start), pageSize);
+	 * 
+	 * }
+	 * 
+	 */
+	@Override
+	public ArrayList<GoodsQA> countComment(String pageNo, String pageSize) {
+		int i = Integer.parseInt(pageNo)-1;
+		 int j=Integer.parseInt(pageSize); 
+		 int start =i*j;
+		return goodsMapper.countComment(String.valueOf(start), pageSize);
+	}
+	  //为了完成翻页功能，输入的变量都需要是string
+	  
+	
+	
+	
+	
+	
+	
+	@Override
+	public int QAinsert(GoodsQAins question) {
+		return goodsMapper.QAinsert(question);
+	}
+
+	
+	
+	
+	
+	@Override
+	public ArrayList<GoodsReview> selectByGoodsreview(Map<String, Object> params) {
+
+		return goodsMapper.selectByGoodsreview(params);
+	}
+
+	@Override
+	public double selectByGoodsRateAvg(long goodsId) {
+
+		return goodsMapper.selectByGoodsRateAvg(goodsId);
+	}
+
+	@Override
+	public long[] selectByGoodsRateCount(long goodsId) {
+		return goodsMapper.selectByGoodsRateCount(goodsId);
+	}
+
+	@Override
+	public long selectByGoodsGreatRateCount(long goodsId) {
+		return goodsMapper.selectByGoodsGreatRateCount(goodsId);
+	}
+
+	@Override
+	public int reviewinsert(GoodsReviewIns Review) {
+
+		return goodsMapper.reviewinsert(Review);
+	}
+
+	
+
 }
