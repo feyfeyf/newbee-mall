@@ -215,12 +215,11 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		return goodsMapper.selectByGoodsGreatRateCount(goodsId);
 	}
 
-	@Override
-	public int reviewinsert(GoodsReviewIns Review) {
-
-		return goodsMapper.reviewinsert(Review);
-	}
-
+	
+	  @Override public int reviewinsert(GoodsReviewIns Review) {
+	  
+	  return goodsMapper.reviewinsert(Review); }
+	 
 	
 
 }

@@ -483,43 +483,42 @@
     </insert>
 
     <select id="selectByGoodsreview" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsReview">
-	    select a.reviewer_id,a.goods_id,review,review_date,rate,count(user_id)as count,review_img
-	    from goods_review_like a join goods_review b on a.reviewer_id =b.reviewer_id and a.goods_id= b.goods_id
-
+    select a.reviewer_id,a.goods_id,review,review_date,count(user_id) as count,rate,review_img
+    from goods_review a left join goods_review_like b on a.reviewer_id = b.reviewer_id and a.goods_id= b.goods_id 
 
 		    <where>
 		    	<if test="reviewType == 1">
-		    		rate = #{reviewRate}
+		    		rate = #{reviewRate,jdbcType=BIGINT}
 		    	</if>
-		    	and a.goods_id = #{goodsId}
+		    and  a.goods_id = #{goodsId,jdbcType=BIGINT}
 		    </where>
 	    group by reviewer_id,goods_id order by rate desc,count desc
 
-	    <choose>
-		    <when test="start == 'first'">
+
+		    <if test="start == 'first'">
 			    <!-- 最初显示前3条 -->
 			    limit 0,3
-		    </when>
+		    </if>
 
-		    <when test="start == 'next'">
+		    <if test="start == 'next'">
 			    <!-- 交互后显示第4条之后 -->
-			    limit 3,999999
-		    </when>
-	    </choose>
+			    limit 3,999
+		    </if>
+
 
     </select>
 
 	<select id="selectByGoodsRateAvg" parameterType="long" resultType="double">
 		select avg(rate) from goods_review
 		<where>
-			goods_id = #{goodsId}
+			goods_id = #{goodsId,jdbcType=BIGINT}
 		</where>
 	</select>
 	
 	<select id="selectByGoodsRateCount" parameterType="long" resultType="long">
 	select count(rate) from goods_review 
 		<where>
-			goods_id = #{goodsId}
+			goods_id = #{goodsId,jdbcType=BIGINT}
 		</where>
 	group by rate order by rate desc
 	</select>
@@ -527,7 +526,7 @@
 	<select id="selectByGoodsGreatRateCount" parameterType="long" resultType="long">
 	select count(rate) from goods_review 
 		<where>
-			goods_id = #{goodsId}
+			goods_id = #{goodsId,jdbcType=BIGINT}
 		</where>
 	</select>
     

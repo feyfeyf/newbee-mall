@@ -10,32 +10,32 @@ package ltd.newbee.mall.entity;
 
 public class GoodsReviewIns {
 
-	private long reviewerId; // goods_id => goodsId
+	private long reviewer_id; // goods_id => goodsId
 
-	private long goodsId;
+	private long goods_id;
 	
 	private String review;
 	
-	private long reviewDate;
+	private long review_date;
 	
 	private long rate;
 	
-	private String reviewImg;
+	private String review_img;
 
-	public long getReviewerId() {
-		return reviewerId;
+	public long getReviewer_id() {
+		return reviewer_id;
 	}
 
-	public void setReviewerId(long reviewerId) {
-		this.reviewerId = reviewerId;
+	public void setReviewer_id(long reviewer_id) {
+		this.reviewer_id = reviewer_id;
 	}
 
-	public long getGoodsId() {
-		return goodsId;
+	public long getGoods_id() {
+		return goods_id;
 	}
 
-	public void setGoodsId(long goodsId) {
-		this.goodsId = goodsId;
+	public void setGoods_id(long goods_id) {
+		this.goods_id = goods_id;
 	}
 
 	public String getReview() {
@@ -46,14 +46,14 @@ public class GoodsReviewIns {
 		this.review = review;
 	}
 
-	public long getReviewDate() {
-		return reviewDate;
+	public long getReview_date() {
+		return review_date;
 	}
 
-	public void setReviewDate(long reviewDate) {
-		this.reviewDate = reviewDate;
+	public void setReview_date(long review_date) {
+		this.review_date = review_date;
 	}
-	
+
 	public long getRate() {
 		return rate;
 	}
@@ -62,23 +62,19 @@ public class GoodsReviewIns {
 		this.rate = rate;
 	}
 
-	
-	public String getReviewImg() {
-		return reviewImg;
+	public String getReview_img() {
+		return review_img;
 	}
 
-	public void setReviewImg(String reviewImg) {
-		this.reviewImg = reviewImg;
+	public void setReview_img(String review_img) {
+		this.review_img = review_img;
 	}
 
 	@Override
 	public String toString() {
-		return "GoodsReview [reviewerId=" + reviewerId + ", goodsId=" + goodsId + ", review=" + review + ", reviewDate="
-				+ reviewDate + ", rate=" + rate + ", reviewImg=" + reviewImg + "]";
+		return "GoodsReviewIns [reviewer_id=" + reviewer_id + ", goods_id=" + goods_id + ", review=" + review
+				+ ", review_date=" + review_date + ", rate=" + rate + ", review_img=" + review_img + "]";
 	}
-
-	
-
 
 	
 
