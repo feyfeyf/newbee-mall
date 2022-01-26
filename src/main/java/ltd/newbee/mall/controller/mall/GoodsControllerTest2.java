@@ -22,7 +22,7 @@ public class GoodsControllerTest2 {
 	NewBeeMallGoodsService newBeeMallGoodsService;
 	@Test
 	public void testGoodsInfo() {
-		List<GoodsImage> list = newBeeMallGoodsService.selectByGoodsImage();
+		List<GoodsImage> list = newBeeMallGoodsService.selectByGoodsImage(10001);
 		System.out.println(list.size());
 		
 		if(list.size()>0) { System.out.println("success"); 

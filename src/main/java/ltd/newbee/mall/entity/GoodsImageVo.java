@@ -8,7 +8,7 @@
  */
 package ltd.newbee.mall.entity;
 
-public class GoodsImage {
+public class GoodsImageVo {
 
 
 
@@ -35,7 +35,7 @@ public class GoodsImage {
 
 	@Override
 	public String toString() {
-		return "GoodsImage [goodsId=" + goodsId + ", imageUrl=" + imageUrl + "]";
+		return "GoodsImageVo [goodsId=" + goodsId + ", imageUrl=" + imageUrl + "]";
 	}
 	
 }

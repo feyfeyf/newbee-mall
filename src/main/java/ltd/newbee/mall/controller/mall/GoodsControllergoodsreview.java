@@ -27,7 +27,7 @@ public class GoodsControllergoodsreview {
 		paramap1.put("reviewType", 1);//判断0：默认输出全部星级评论，1：按星级输出评论
 		paramap1.put("reviewRate", 4);//选择星级评价1~5
 		paramap1.put("start", "next");//first：前3条 next：第4条到最后一条
-		paramap1.put("goodsId", 20001);//选择要看评论的商品的goodsid
+		paramap1.put("goodsId", 10001);//选择要看评论的商品的goodsid
 		ArrayList<GoodsReview> listGoodsreview=newBeeMallGoodsService.selectByGoodsreview(paramap1);
 		
 		long goodsId = 20001;//选择看哪个商品

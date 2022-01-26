@@ -20,8 +20,10 @@ import ltd.newbee.mall.entity.GoodsQA;
 import ltd.newbee.mall.entity.GoodsQAins;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsReviewIns;
+import ltd.newbee.mall.entity.GoodsSearch;
 import ltd.newbee.mall.entity.Goodsinfo;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.NewBeeMallGoodsChkHistory;
 import ltd.newbee.mall.entity.StockNumDTO;
 
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -64,15 +66,13 @@ public interface NewBeeMallGoodsMapper {
 
 	Goodsinfo selectByGoodsinfoPK(Long id);
 
-	List<GoodsImage> selectByGoodsImage();
+	ArrayList<GoodsImage> selectByGoodsImage(long goodsId);
 	
 
 
 	ArrayList<NewBeeMallGoods> selectBygoodsPage(Map<String, Object> paramap1);
     
-	ArrayList<GoodsQA> selectByGoodsqa(String orderBy,int pageNo);
-
-	ArrayList<GoodsQA> selectByGoodsqa(String orderBy, List<GoodsQA> subList);
+	ArrayList<GoodsQA> selectByGoodsqa(long goodsId,String orderBy);
 	
 	ArrayList<GoodsQA> countComment(String start,String pageSize);
 
@@ -87,6 +87,15 @@ public interface NewBeeMallGoodsMapper {
 	long selectByGoodsGreatRateCount(long goodsId);
 	
 	int reviewinsert(GoodsReviewIns Review);
+	
+	Goodsinfo selectByGoodsinfoPK(long id);
     
-    
+	ArrayList<String> GoodsSearchHistory(long userId);
+	
+	int SearhHistoryInsert(GoodsSearch Gs);
+	
+	ArrayList<String> selectBygoodsHelp(String keyword);
+	
+	ArrayList<NewBeeMallGoodsChkHistory> GoodsRecenctChk(long goodsId);
+	
 }

@@ -8,6 +8,8 @@
  */
 package ltd.newbee.mall.controller.mall;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -24,11 +26,20 @@ import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
+import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.GoodsImageVo;
+import ltd.newbee.mall.entity.GoodsQA;
+import ltd.newbee.mall.entity.GoodsQAVo;
+import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.GoodsReviewVo;
+import ltd.newbee.mall.entity.Goodsinfo;
+import ltd.newbee.mall.entity.GoodsinfoVo;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
+import ltd.newbee.mall.util.SearchPageReviewParams;
 
 @Controller
 public class GoodsController {
@@ -77,6 +88,30 @@ public class GoodsController {
         if (goodsId < 1) {
             return "error/error_5xx";
         }
+      //img   原来写的方法没传入goodsid
+        ArrayList<GoodsImage> listImage = newBeeMallGoodsService.selectByGoodsImage(goodsId);
+        List<GoodsImageVo> VolistImage = BeanUtil.copyList(listImage, GoodsImageVo.class);
+    	request.setAttribute("GoodsImage",VolistImage);
+    //goodsInfo
+    	Goodsinfo info = newBeeMallGoodsService.selectByGoodsinfoPK(goodsId);
+    	GoodsinfoVo infoVo = new GoodsinfoVo();
+    	BeanUtil.copyProperties(info, infoVo);
+    	request.setAttribute("GoodsInfo",infoVo);
+    //goodsQA
+    	ArrayList<GoodsQA> listQA = newBeeMallGoodsService.selectByGoodsqa(goodsId, "new");
+    	List<GoodsQAVo> VolistQA = BeanUtil.copyList(listQA, GoodsQAVo.class);
+    	request.setAttribute("GoodsQA",VolistQA);
+    //goodsreview
+    	Map<String, Object> paramap1 = new SearchPageReviewParams();
+		paramap1.put("reviewType", 0);//判断0：默认输出全部星级评论，1：按星级输出评论
+		paramap1.put("reviewRate", 4);//选择星级评价1~5
+		paramap1.put("start", "first");//first：前3条 next：第4条到最后一条
+		paramap1.put("goodsId", goodsId);//选择要看评论的商品的goodsid
+		ArrayList<GoodsReview> listGoodsreview=newBeeMallGoodsService.selectByGoodsreview(paramap1);
+		List<GoodsReviewVo> VolistGoodsreview = BeanUtil.copyList(listGoodsreview, GoodsReviewVo.class);
+    	request.setAttribute("Goodsreview",VolistGoodsreview);
+    	
+        
         NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
         if (goods == null) {
             NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
@@ -89,6 +124,7 @@ public class GoodsController {
         goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
         request.setAttribute("goodsDetail", goodsDetailVO);
         return "mall/detail";
+        
     }
 
 }

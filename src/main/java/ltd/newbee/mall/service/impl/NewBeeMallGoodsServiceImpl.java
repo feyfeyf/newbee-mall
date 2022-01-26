@@ -29,8 +29,10 @@ import ltd.newbee.mall.entity.GoodsQA;
 import ltd.newbee.mall.entity.GoodsQAins;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsReviewIns;
+import ltd.newbee.mall.entity.GoodsSearch;
 import ltd.newbee.mall.entity.Goodsinfo;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.NewBeeMallGoodsChkHistory;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -137,11 +139,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		return pageResult;
 	}
 
-	@Override
-	public List<GoodsImage> selectByGoodsImage() {
-		// TODO 自动生成的方法存根
-		return goodsMapper.selectByGoodsImage();
-	}
+
 
 	@Override
 	public ArrayList<NewBeeMallGoods> selectBygoodsPage(Map<String, Object> paramap1) {
@@ -149,12 +147,9 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	}
 
 	@Override
-	public ArrayList<GoodsQA> selectByGoodsqa(String orderBy, int pageNo) {
-		ArrayList<GoodsQA> qa = goodsMapper.selectByGoodsqa(orderBy, pageNo);
-		// 从第几条数据开始
-		int start = (pageNo - 1) * 3;
-		int end = pageNo * 3;
-		return goodsMapper.selectByGoodsqa(orderBy, qa.subList(start, end));
+	public ArrayList<GoodsQA> selectByGoodsqa(long goodsId,String orderBy) {
+		return goodsMapper.selectByGoodsqa(goodsId,orderBy);
+
 	}
 
 	
@@ -214,12 +209,44 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	public long selectByGoodsGreatRateCount(long goodsId) {
 		return goodsMapper.selectByGoodsGreatRateCount(goodsId);
 	}
-
-	
-	  @Override public int reviewinsert(GoodsReviewIns Review) {
-	  
-	  return goodsMapper.reviewinsert(Review); }
 	 
+	@Override 
+	public int reviewinsert(GoodsReviewIns Review) {  
+	  return goodsMapper.reviewinsert(Review); 
+	}
+
+	@Override
+	public ArrayList<String> GoodsSearchHistory(long userId) {
+		return goodsMapper.GoodsSearchHistory(userId);
+	}
+
+	@Override
+	public int SearhHistoryInsert(GoodsSearch Gs) {
+		return goodsMapper.SearhHistoryInsert(Gs);
+	}
+
+	@Override
+	public ArrayList<String> selectBygoodsHelp(String keyword) {
+		return goodsMapper.selectBygoodsHelp(keyword);
+	}
+
+	@Override
+	public Goodsinfo selectByGoodsinfoPK(long id) {
+		// TODO 自动生成的方法存根
+		return goodsMapper.selectByGoodsinfoPK(id);
+	}
+
+	@Override
+	public ArrayList<GoodsImage> selectByGoodsImage(long goodsId) {
+		// TODO 自动生成的方法存根
+		return goodsMapper.selectByGoodsImage(goodsId);
+	}
+
+	@Override
+	public ArrayList<NewBeeMallGoodsChkHistory> GoodsRecenctChk(long goodsId) {
+		return goodsMapper.GoodsRecenctChk(goodsId);
+	}
+
 	
 
 }

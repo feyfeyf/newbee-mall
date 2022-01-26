@@ -26,10 +26,10 @@ public class GoodsControllergoodsQA {
 	NewBeeMallGoodsService newBeeMallGoodsService;
 	@Test
 	public void testGoodsQA() {
-		//ArrayList<GoodsQA> list = newBeeMallGoodsService.selectByGoodsqa("like",1);
-		ArrayList<GoodsQA> listGoods=newBeeMallGoodsService.countComment("2","3");
+		ArrayList<GoodsQA> list = newBeeMallGoodsService.selectByGoodsqa(10001,"like");
+		//ArrayList<GoodsQA> listGoods=newBeeMallGoodsService.countComment("2","3");
 		
-		System.out.println(listGoods);
+		//System.out.println(listGoods);
 		//System.out.println(list.get(1));
 
 		/*

@@ -389,7 +389,8 @@
     </select>
       <select id="selectByGoodsImage" parameterType="long" resultType="ltd.newbee.mall.entity.GoodsImage">
         select goodsId,imageUrl
-        From goodsImage 
+        From goodsImage where goodsId = #{goodsId,jdbcType=BIGINT}
+		 
         
     </select>
     
@@ -441,8 +442,11 @@
     <select id="selectByGoodsqa" parameterType="long" resultType="ltd.newbee.mall.entity.GoodsQA">
         select 	a.goods_id,a.qa_id,question,question_date,answer,answer_date,count(user_id) as count
             from goods_like a join goods_comment b on a.goods_id= b.goods_id and a.qa_id = b.qa_id
+              <where>
+		    and  a.goods_id = #{goodsId,jdbcType=BIGINT}
+		    </where>
                group by goods_id,qa_id 
-            
+
         <choose>
                 <when test="orderBy == 'new'">
                     <!-- 按照发布时间倒序排列 -->
@@ -529,6 +533,37 @@
 			goods_id = #{goodsId,jdbcType=BIGINT}
 		</where>
 	</select>
+	
+	
+	<select id="GoodsSearchHistory" parameterType="long" resultType="String">
+	select goods_name from goods_search_history 
+	    <where>
+			user_id = #{userId,jdbcType=BIGINT}
+		</where>
+	group by goods_name order by count(goods_name) desc,date_time desc
+	</select>
+	
+	<insert id="SearhHistoryInsert" parameterType="ltd.newbee.mall.entity.GoodsSearch">
+    insert into goods_search_history (user_id,date_time,goods_name)
+    values (#{userId,jdbcType=BIGINT}, #{dateTime,jdbcType=TIMESTAMP},#{goodsName,jdbcType=VARCHAR})
+    </insert>
+	
+	<select id="selectBygoodsHelp" parameterType="String" resultType="String">
+        select goods_name from tb_newbee_mall_goods_info
+        where goods_name like CONCAT('%',#{keyword},'%')
+        group by goods_name
+    </select>
+	
+	<select id="GoodsRecenctChk" parameterType="long" resultType="ltd.newbee.mall.entity.NewBeeMallGoodsChkHistory">
+	select a.goods_name,goods_cover_img,selling_price
+    from tb_newbee_mall_goods_info a left join recenct_chk_goods b on a.goods_id= b.goods_id 
+	    <where>
+			user_id = #{userId,jdbcType=BIGINT}
+		</where>
+	group by goods_name order by count(b.goods_id) desc,date_time desc
+	</select>
+	
+	
     
 
 </mapper>

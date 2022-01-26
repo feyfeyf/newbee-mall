@@ -8,7 +8,7 @@
  */
 package ltd.newbee.mall.entity;
 
-public class GoodsQA {
+public class GoodsQAVo {
 
 
 
@@ -16,7 +16,11 @@ public class GoodsQA {
 
 
 
-
+	@Override
+	public String toString() {
+		return "GoodsQA [goods_id=" + goods_id + ", qa_id=" + qa_id + ", question=" + question + ", question_data="
+				+ question_data + ", answer=" + answer + ", answer_data=" + answer_data + "]";
+	}
 
 	private long goods_id;
 
@@ -24,13 +28,11 @@ public class GoodsQA {
 	
 	private String question;
 	
-	private long question_date;
+	private long question_data;
 	
 	private String answer;
 	
-	private long answer_date;
-	
-	private long count;
+	private long answer_data;
 	
 	public long getGoods_id() {
 		return goods_id;
@@ -56,6 +58,13 @@ public class GoodsQA {
 		this.question = question;
 	}
 
+	public long getQuestion_data() {
+		return question_data;
+	}
+
+	public void setQuestion_data(long question_data) {
+		this.question_data = question_data;
+	}
 
 	public String getAnswer() {
 		return answer;
@@ -65,38 +74,15 @@ public class GoodsQA {
 		this.answer = answer;
 	}
 
-
-
-	public long getQuestion_date() {
-		return question_date;
+	public long getAnswer_data() {
+		return answer_data;
 	}
 
-	public void setQuestion_date(long question_date) {
-		this.question_date = question_date;
+	public void setAnswer_data(long answer_data) {
+		this.answer_data = answer_data;
 	}
 
-	public long getAnswer_date() {
-		return answer_date;
-	}
-
-	public void setAnswer_date(long answer_date) {
-		this.answer_date = answer_date;
-	}
 
 	
-	
-	public long getCount() {
-		return count;
-	}
-
-	public void setCount(long count) {
-		this.count = count;
-	}
-
-	@Override
-	public String toString() {
-		return "GoodsQA [goods_id=" + goods_id + ", qa_id=" + qa_id + ", question=" + question + ", question_data="
-				+ question_date + ", answer=" + answer + ", answer_data=" + answer_date + "]";
-	}
 	
 }
